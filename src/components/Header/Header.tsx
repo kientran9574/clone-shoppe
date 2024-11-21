@@ -47,7 +47,6 @@ const Header = () => {
     enabled: isAuthenticated
   })
   const purchaseIncart = purchaseInCartData?.data.data
-  if (!purchaseIncart) return
   const onSubmitSearch = handleSubmit((data) => {
     const config = queryConfig.order
       ? omit(
@@ -69,7 +68,6 @@ const Header = () => {
   const handleLogout = () => {
     logoutMutation.mutate()
   }
-
   return (
     <div className='bg-[linear-gradient(#ee4d2d,#ff7337)] pb-5 pt-2 text-white'>
       <div className='max-w-7xl mx-auto px-4'>
@@ -90,7 +88,7 @@ const Header = () => {
             <IconChevron></IconChevron>
           </Popover>
 
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <Popover
               className='flex items-center py-1 hover:text-gray-300 hover:cursor-pointer ml-6'
               renderPopover={
@@ -120,8 +118,7 @@ const Header = () => {
               </div>
               <div className='ml-1'>{profile?.email}</div>
             </Popover>
-          )}
-          {!isAuthenticated && (
+          ) : (
             <div className='flex items-center ml-4 text-white '>
               <Link to={'/register'} className='block p-1 hover:text-white/80'>
                 Đăng ký
@@ -177,8 +174,8 @@ const Header = () => {
                     <div className='p-2'>
                       <div className='text-gray-400 capitalize'>Sản phẩm mới thêm</div>
                       <div className='mt-5'>
-                        {purchaseIncart && purchaseIncart.length > 0 ? (
-                          purchaseIncart.slice(0, MAX_PURCHASE).map((item) => {
+                        {purchaseIncart && purchaseIncart?.length > 0 ? (
+                          purchaseIncart?.slice(0, MAX_PURCHASE).map((item) => {
                             return (
                               <div className='mt-4 flex' key={item._id}>
                                 <div className='flex-shrink-0 w-11 h-11'>
@@ -203,8 +200,10 @@ const Header = () => {
                         )}
                         <div className='mt-4 flex items-center justify-between'>
                           <div className='capitalize'>
-                            {purchaseIncart.length > MAX_PURCHASE ? purchaseIncart.length - MAX_PURCHASE : ''} Thêm Hàng
-                            Vào giỏ
+                            {purchaseIncart && purchaseIncart?.length > MAX_PURCHASE
+                              ? purchaseIncart?.length - MAX_PURCHASE
+                              : ''}{' '}
+                            Thêm Hàng Vào giỏ
                           </div>
                           <Link to={'/cart'} className='bg-orange p-3 text-white rounded-sm'>
                             Xem giỏ hàng

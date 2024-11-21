@@ -25,12 +25,12 @@ const History = lazy(() => import('./pages/User/pages/History'))
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
-  return isAuthenticated ? <Outlet></Outlet> : <Navigate to={'/login'}></Navigate>
+  return isAuthenticated ? <Outlet></Outlet> : <Navigate to={'/login'} replace></Navigate>
 }
 // Khi đã đăng nhập rồi
 function RejectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
-  return !isAuthenticated ? <Outlet></Outlet> : <Navigate to={'/'}></Navigate>
+  return !isAuthenticated ? <Outlet></Outlet> : <Navigate to={'/'} replace></Navigate>
 }
 
 const useRouterElement = () => {

@@ -9,8 +9,12 @@ const setAccessTokenToLS = (access_token: string) => {
 const getAccessTokenToLS = () => {
   return localStorage.getItem('access_token') || ''
 }
+const getRefreshTokenToLS = () => {
+  return localStorage.getItem('refresh_token') || ''
+}
 const clearToLS = () => {
   localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
   localStorage.removeItem('profile')
   const clearLSEvent = new Event('clearToLS')
   LocalStorageEventTarget.dispatchEvent(clearLSEvent)
@@ -22,4 +26,8 @@ const getProfile = () => {
 const setProfileToLS = (profile: User) => {
   localStorage.setItem('profile', JSON.stringify(profile))
 }
-export { setAccessTokenToLS, getAccessTokenToLS, clearToLS, getProfile, setProfileToLS }
+export const setRefreshTokenToLS = (refresh_token: string) => {
+  localStorage.setItem('refresh_token', refresh_token)
+}
+
+export { setAccessTokenToLS, getAccessTokenToLS, clearToLS, getProfile, setProfileToLS, getRefreshTokenToLS }
